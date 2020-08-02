@@ -4,9 +4,16 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import { HashRouter as Router, Route } from 'react-router-dom';
+
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <div>
+        <Route exact path="/" component={App}/>
+      </div>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );

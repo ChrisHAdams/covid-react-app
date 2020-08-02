@@ -1,0 +1,13 @@
+
+li {
+  display: inline;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.Menu{
+  background-color: #282c34;
+  min-height: 20vh;
+  color: #61dafb;
+}
+
