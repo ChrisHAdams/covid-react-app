@@ -25,6 +25,18 @@ body { font-size: 1rem;
   flex-basis: 100px;
 }
 
+@media screen and (max-width: 800px) {
+  .flex-grid-left, .flex-grid-right {
+    flex-basis: 10px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .flex-grid-left, .flex-grid-right {
+    flex-basis: 2px;
+  }
+}
+
 .flex-grid-left {
   order: -1;
 }
