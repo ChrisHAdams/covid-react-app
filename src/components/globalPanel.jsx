@@ -1,14 +1,6 @@
 import React from 'react';
 import Styled from 'styled-components';
-
-
-const Panel = Styled.div`
-    border-radius: 3px;
-    padding: 0.25em 1em;
-    margin: 1em;
-    background-color: #293447;
-    border: 2px solid #48aff0;
-`;
+import Panel from './panel';
 
 const FlexGrid = Styled.div`
   display: flex;
@@ -31,33 +23,32 @@ function GlobalPanel(props) {
 
     if(props.countryOneCases > 0){
 
-      countryOneData = <><h4>{props.countryOne} Cases {props.countryOneCases}.</h4>
-      <h4>{props.countryOne} Deaths {props.countryOneDeaths}.</h4>
+      countryOneData = <><h4>{props.countryOne} Cases {props.countryOneCases.toLocaleString()}.</h4>
+      <h4>{props.countryOne} Deaths {props.countryOneDeaths.toLocaleString()}.</h4>
       <h4>{props.countryOne} Deaths {props.countryOneDeathsPercentage}%.</h4></>;
 
-      countryTwoData = <><h4>{props.countryTwo} Cases {props.countryTwoCases}.</h4>
-        <h4>{props.countryTwo} Deaths {props.countryTwoDeaths}.</h4>
+      countryTwoData = <><h4>{props.countryTwo} Cases {props.countryTwoCases.toLocaleString()}.</h4>
+        <h4>{props.countryTwo} Deaths {props.countryTwoDeaths.toLocaleString()}.</h4>
         <h4>{props.countryTwo} Deaths {props.countryTwoDeathsPercentage}%.</h4></>;
     }
 
     return (
       <Panel>
-
-      <FlexGrid>
-        <br/>
-          <FlexCol>
-            <h4>Global Cases {props.globalCases}.</h4>
-            <h4>Global Deaths {props.globalDeaths}.</h4>
-            <h4>Global Deaths {props.globalDeathsPercentage}%.</h4>
-          </FlexCol>
-          <FlexCol>
-            {countryOneData}
-          </FlexCol>
-          <FlexCol>
-            {countryTwoData}
-          </FlexCol>
-        <br/>
-      </FlexGrid>
+        <FlexGrid>
+          <br/>
+            <FlexCol>
+              <h4>Global Cases {props.globalCases.toLocaleString()}.</h4>
+              <h4>Global Deaths {props.globalDeaths.toLocaleString()}.</h4>
+              <h4>Global Deaths {props.globalDeathsPercentage}%.</h4>
+            </FlexCol>
+            <FlexCol>
+              {countryOneData}
+            </FlexCol>
+            <FlexCol>
+              {countryTwoData}
+            </FlexCol>
+          <br/>
+        </FlexGrid>
       </Panel>
 
     );

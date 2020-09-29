@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import PageLayout from './components/page-layout';
-import buildChartData from './helpers/common';
+import TopTenPanel from './components/topTenPanel';
+import Panel from './components/panel';
+
+//import buildChartData from './helpers/common';
+import {buildChartData,getTopDeaths, getTopInfections, getTopSpikes} from './helpers/common';
 
 import './css/page-layout.css';
 import Select from './components/select';
@@ -8,14 +12,6 @@ import Button from './components/button';
 import BasicLineChart from './components/line-chart';
 import GlobalPanel from './components/globalPanel';
 import Styled from 'styled-components';
-
-const Panel = Styled.div`
-    border-radius: 3px;
-    padding: 0.25em 1em;
-    margin: 1em;
-    background-color: #293447;
-    border: 2px solid #48aff0;
-`;
 
 
 function App() {
@@ -35,9 +31,18 @@ function App() {
   const [countryTwoCases, setCountryTwoCases] = useState(0);
   const [countryTwoDeaths, setCountryTwoDeaths] = useState(0);
   const [countryTwoDeathsPercentage, setCountryTwoDeathsPercentage] = useState(0);
+  const [topInfectionCounts, setTopInfectionCounts] = useState([]);
+  const [topDeathCounts, setTopDeathCounts] = useState([]);
+  const [topSpikeCounts, setTopSpikeCounts] = useState([]);
+  const [topListValue, setTopListSwitch] = useState('TopTen');
 
   const handleCountryOneChange = event => changeCountryOne(event.target.value);
   const handleCountryTwoChange = event => changeCountryTwo(event.target.value);
+
+  const topListOptions = [{"key": "0", "value": "TopTen", "text": "Top Ten"},
+                          {"key": "1", "value": "All", "text": "All"}];
+
+  const handleTopListOptions = event => changeTopListOptions(event.target.value);
 
   useEffect(() => {
     fetch(`https://pomber.github.io/covid19/timeseries.json`)
@@ -47,6 +52,7 @@ function App() {
         setCovidData(response);
         buildCountrySelectList(Object.keys(response));
         getGlobalValues(response);
+        getTopLists(response);
         setIsLoading(false);
       })
    .catch(error => console.log(error));
@@ -95,6 +101,14 @@ function App() {
 
   }
 
+  function getTopLists(data){
+
+    setTopDeathCounts(getTopDeaths(data));
+    setTopInfectionCounts(getTopInfections(data));
+    setTopSpikeCounts(getTopSpikes(data));
+
+  }
+
   function plotDataClick(){
     const chartData = buildChartData(covidData, countryOne, countryTwo);
     setChartData(chartData);
@@ -125,9 +139,13 @@ function App() {
     setCountryTwo(value);
   }
 
+  function changeTopListOptions(value) {
+    setTopListSwitch(value);
+  }
+
   return (
     <PageLayout>
-      <h2>Graphs Page</h2>
+      <h2>Covid-19 Graphs Page</h2>
       <Panel>
         <br/>
         <Select
@@ -164,7 +182,7 @@ function App() {
         <br/>
 
       </Panel>
-
+      <br/>
       <GlobalPanel
         globalDeaths={globalDeaths}
         globalCases={globalCases}
@@ -203,6 +221,15 @@ function App() {
         data={chartData}
         lineOneData={"countryOneDeathIncrease"}
         lineTwoData={"countryTwoDeathIncrease"} />
+      <br/>
+      <TopTenPanel
+        topDeaths={topDeathCounts}
+        topInfected={topInfectionCounts}
+        topSpikes={topSpikeCounts}
+        topListValue={topListValue}
+        topListOptions={topListOptions}
+        controlFunc={handleTopListOptions}
+      />
     </PageLayout>
   );
 }

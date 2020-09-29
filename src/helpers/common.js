@@ -1,5 +1,5 @@
 
-export default function buildChartData(covidData, countryOne, countryTwo) {
+export function buildChartData(covidData, countryOne, countryTwo) {
 
   let countryOneData = [];
   let countryTwoData = [];
@@ -87,6 +87,109 @@ export default function buildChartData(covidData, countryOne, countryTwo) {
   console.log(chartData);
 
   return chartData;
+
+}
+
+export function getTopSpikes(chartdata){
+
+  let response = [];
+  let tempArray = [];
+  console.log(chartdata);
+
+  const countryList = Object.keys(chartdata);
+
+  countryList.forEach(function(country){
+
+    let spike = chartdata[country][chartdata[country].length - 1].confirmed - chartdata[country][chartdata[country].length - 4].confirmed;
+
+    if (spike <= 0) { spike = 0; }
+
+    let tempObj={};
+    tempObj.country = country;
+    tempObj.count = spike;
+
+    tempArray.push(tempObj);
+
+  });
+
+  tempArray.sort(function (a, b) {
+    return b.count - a.count;
+  });
+
+  for (let count = 0; count < tempArray.length; count ++) {
+    let tempObj = {};
+    tempObj.country = tempArray[count].country;
+    tempObj.count = tempArray[count].count;
+    response.push(tempObj);
+  }
+
+  console.log(response);
+
+  return response;
+
+}
+
+export function getTopDeaths(chartdata){
+
+  let response = [];
+  let tempArray = [];
+
+  const countryList = Object.keys(chartdata);
+
+  countryList.forEach(function(country){
+
+    let tempObj = chartdata[country][chartdata[country].length - 1];
+    tempObj.country = country;
+
+    tempArray.push(tempObj);
+  });
+
+  tempArray.sort(function (a, b) {
+    return b.deaths - a.deaths;
+  });
+
+  for (let count = 0; count < tempArray.length; count ++) {
+    let tempObj = {};
+    tempObj.country = tempArray[count].country;
+    tempObj.count = tempArray[count].deaths;
+    response.push(tempObj);
+  }
+
+  console.log(response);
+
+  return response;
+
+}
+
+export function getTopInfections(chartdata){
+
+  let response = [];
+  let tempArray = [];
+
+  const countryList = Object.keys(chartdata);
+
+  countryList.forEach(function(country){
+
+    let tempObj = chartdata[country][chartdata[country].length - 1];
+    tempObj.country = country;
+
+    tempArray.push(tempObj);
+  });
+
+  tempArray.sort(function (a, b) {
+    return b.confirmed - a.confirmed;
+  });
+
+  for (let count = 0; count < tempArray.length; count ++) {
+    let tempObj = {};
+    tempObj.country = tempArray[count].country;
+    tempObj.count = tempArray[count].confirmed;
+    response.push(tempObj);
+  }
+
+  console.log(response);
+
+  return response;
 
 }
 
