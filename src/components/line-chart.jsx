@@ -12,6 +12,10 @@ const Panel = Styled.div`
     margin: 1em;
     background-color: #293447;
     border: 2px solid #48aff0;
+
+    @media (max-width: 1200px) {
+      display: none;
+    }
 `;
 
 function BasicLineChart(props) {

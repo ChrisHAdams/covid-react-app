@@ -8,6 +8,13 @@ const PanelStyle = Styled.div`
     margin: 1em;
     background-color: #293447;
     border: 2px solid #48aff0;
+
+    @media (max-width: 600px) {
+      border: 1px solid #48aff0;
+      padding: 0.25em;
+      margin: 0.25em;
+    }
+
 `;
 
 

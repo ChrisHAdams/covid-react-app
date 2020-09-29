@@ -6,11 +6,17 @@ import Select from './select';
 
 const FlexGrid = Styled.div`
   display: flex;
+  @media (max-width: 1000px) {
+    flex-direction: column;
+  }
+
 `;
 
 const FlexCol = Styled.div`
   flex: 1;
 `;
+
+
 
 function TopTenPanel(props) {
 

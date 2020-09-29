@@ -11,7 +11,6 @@ import Select from './components/select';
 import Button from './components/button';
 import BasicLineChart from './components/line-chart';
 import GlobalPanel from './components/globalPanel';
-import Styled from 'styled-components';
 
 
 function App() {
